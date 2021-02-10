@@ -28,12 +28,6 @@ class News extends Component{
       const {posts}=this.state;
         console.log(posts);
         return(
-          <View>
-             <Header
-              placement="center"
-               backgroundColor="white"
-              centerComponent={{ text: 'News', style: { color: 'black' } }}
-            />
           <FlatList
             keyExtractor={item=> item.id.toString()}
             data={posts}
@@ -55,8 +49,6 @@ class News extends Component{
              </TouchableOpacity>  
              )}
           />
-     
-      </View>
         )
     }
 }

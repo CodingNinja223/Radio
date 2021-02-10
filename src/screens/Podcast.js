@@ -110,14 +110,6 @@ class Podcast extends Component{
       const {podcast,isPlaying}=this.state;
       console.log(this.state.sounds)
         return(
-          <View>
-            <Header style={{backgroundColor:'white'}}>
-          <Left/>
-          <Body>
-            <Title style={{color:'black'}}>Podcast</Title>
-          </Body>
-          <Right />
-        </Header>
              <FlatList
               keyExtractor={item=> item.id.toString()}
               data={podcast}
@@ -148,7 +140,6 @@ class Podcast extends Component{
                           </Button>
                           <Button transparent>
                             <Text>{item.meta.duration}</Text>
-                            <Text>{item.id}</Text>
                           </Button>
                       </Left>
                       <Body>
@@ -159,7 +150,6 @@ class Podcast extends Component{
                 </Content>
               )}
               />
-          </View>
         )
     }
 }

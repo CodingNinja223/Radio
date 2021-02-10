@@ -27,13 +27,7 @@ sendRequestHandler=()=>{
     render(){
       return(
       <View >
-           <Header style={{backgroundColor:'white'}}>
-          <Left/>
-          <Body>
-            <Title style={{color:'black'}}>Request A Song</Title>
-          </Body>
-          <Right />
-        </Header>
+           
       </View>
       
       )

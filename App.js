@@ -36,13 +36,58 @@ return(
             )
         }}
        />
-	   <Stack.Screen name="Detail" component={NewsDeatil} />
         <Stack.Screen name="Watch" component={Watch}  options={{ title: 'Watch' }}/>
         <Stack.Screen name="Podcast" component={Podcast} options={{ title: 'Watch' }}/>
    </Stack.Navigator>
  )
 }
 
+const NewsNavigator=({navigation})=>{
+    return(
+        <Stack.Navigator initialRouteName="News">
+            <Stack.Screen name="News" component={News}  
+                 options={{
+            
+                    headerLeft:()=>(
+                        <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
+                    )
+                }}
+            />
+            <Stack.Screen name="Detail" component={NewsDeatil} />
+        </Stack.Navigator>
+    )
+}
+
+
+const WatchNavigator=({navigation})=>{
+    return(
+        <Stack.Navigator>
+            <Stack.Screen name="Watch" component={Watch}
+               options={{
+            
+                headerLeft:()=>(
+                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
+                )
+            }}
+            />
+        </Stack.Navigator>
+    )
+}
+
+const PodcastNavigator=({navigation})=>{
+    return(
+        <Stack.Navigator>
+            <Stack.Screen name="Podcast" component={Podcast}
+              options={{
+            
+                headerLeft:()=>(
+                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
+                )
+            }}
+            />
+        </Stack.Navigator>
+    )
+}
 const Tab=createBottomTabNavigator();
 
 const TabNavigation=()=>{
@@ -72,12 +117,26 @@ const TabNavigation=()=>{
          })}
         >
              <Tab.Screen name="Now Playing" component={PrimaryNavigation}/>
-             <Tab.Screen name="Watch" component={Watch}/>
-             <Tab.Screen name="Podcast" component={Podcast}/>
+             <Tab.Screen name="Watch" component={WatchNavigator}/>
+             <Tab.Screen name="Podcast" component={PodcastNavigator}/>
         </Tab.Navigator>
     )
 }
 
+const ShopNavigator=({navigation})=>{
+    return(
+       <Stack.Navigator>
+           <Stack.Screen name="Shop" component={Shop}  
+              options={{
+            
+                headerLeft:()=>(
+                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
+                )
+            }}
+           />
+       </Stack.Navigator>
+    )
+}
 
 const ShopTabNavigation=()=>{
     return(
@@ -101,12 +160,41 @@ const ShopTabNavigation=()=>{
              }
          })}
         >
-             <Tab.Screen name="Shop" component={Shop}/>
+             <Tab.Screen name="Shop" component={ShopNavigator}/>
              <Tab.Screen name="Cart" component={Cart}/>
         </Tab.Navigator>
     )
 }
+const RequestNavigation=({navigation})=>{
+    return(
+      <Stack.Navigator>
+          <Stack.Screen name="Request Song" component={SongRequest}  
+            options={{
+            
+                headerLeft:()=>(
+                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
+                )
+            }}
+          />
+      </Stack.Navigator>
+    )
+}
 
+
+const ReviewNavigation=({navigation})=>{
+    return(
+      <Stack.Navigator>
+          <Stack.Screen name="Review" component={Review}  
+            options={{
+            
+                headerLeft:()=>(
+                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
+                )
+            }}
+          />
+      </Stack.Navigator>
+    )
+}
 const Drawer =createDrawerNavigator();
 
 class App extends Component {
@@ -182,9 +270,9 @@ class App extends Component {
            <Drawer.Navigator initialRouteName="Now Playing">
                <Drawer.Screen name="Now Playing" component={TabNavigation}/>
                <Drawer.Screen name="Shop" component={ShopTabNavigation}/>
-               <Drawer.Screen name="News" component={News}/>
-               <Drawer.Screen name="Song Request" component={SongRequest}/>
-               <Drawer.Screen name="Review" component={Review}/>
+               <Drawer.Screen name="News" component={NewsNavigator}/>
+               <Drawer.Screen name="Song Request" component={RequestNavigation}/>
+               <Drawer.Screen name="Review" component={ReviewNavigation}/>
            </Drawer.Navigator>
         </NavigationContainer>
 	)

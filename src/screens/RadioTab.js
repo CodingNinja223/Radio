@@ -6,7 +6,7 @@ import History from './SongHistory';
 
 const RadioTab=()=>{
     return(
-      <ScrollableTabView>
+      <ScrollableTabView tabBarBackgroundColor="white">
           <Radio tabLabel="Now Playing"/>
           <History tabLabel="Song history"/>
       </ScrollableTabView>

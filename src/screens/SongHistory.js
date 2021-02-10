@@ -12,7 +12,7 @@ class Histrory extends React.Component{
 
 
 async componentDidMount(){
-    await setTestDeviceIDAsync('EMULATOR');
+    
 }
 
    render(){

@@ -29,14 +29,6 @@ constructor(){
         const {products}=this.state;
   
         return(
-          <View>
-             <Header style={{backgroundColor:'white'}}>
-              <Left/>
-              <Body>
-                <Title style={{color:'black'}}>Shop</Title>
-              </Body>
-              <Right />
-            </Header>
             <FlatList
              keyExtractor={item=>item.id.toString()}
              data={products}
@@ -79,7 +71,6 @@ constructor(){
              )}
             
             />
-            </View>
         )
     }
 }
