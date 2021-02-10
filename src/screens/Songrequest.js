@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import {View,Text,StyleSheet,TextInput,TouchableOpacity} from 'react-native';
-import { Header } from 'react-native-elements';
+import {View,Text,StyleSheet,TextInput,TouchableOpacity,Button} from 'react-native';
+import { Container, Header, Content, Form, Item, Input, Label,Left,Body,Right,Title } from 'native-base';
 import axios from 'axios'
 
 
@@ -26,22 +26,14 @@ sendRequestHandler=()=>{
 
     render(){
       return(
-      
-         
-        <View style={styles.container}>
-          <Text style={styles.headerText}>SEND A SONG REQUEST</Text>
-          <View style={styles.container}>
-              <TextInput
-                style={styles.textInput}
-                placeholder="Send a song request"
-                onChangeText={(e)=> this.setState({request:e})}
-              />
-            <View>
-              <TouchableOpacity style={styles.button} onPress={this.sendRequestHandler}>
-                    <Text style={styles.text}>SEND </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+      <View >
+           <Header style={{backgroundColor:'white'}}>
+          <Left/>
+          <Body>
+            <Title style={{color:'black'}}>Request A Song</Title>
+          </Body>
+          <Right />
+        </Header>
       </View>
       
       )

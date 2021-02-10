@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Audio } from 'expo-av';
+import {Helmet} from "react-helmet";
 
 
 const audioBookPlaylist = [
@@ -97,6 +98,8 @@ export default class Radio extends Component {
 		}
 	}
 
+
+	
 	onPlaybackStatusUpdate = status => {
 		this.setState({
 			isBuffering: status.isBuffering
@@ -112,29 +115,29 @@ export default class Radio extends Component {
 		})
 	}
 
-	// handlePreviousTrack = async () => {
-	// 	let { playbackInstance, currentIndex } = this.state
-	// 	if (playbackInstance) {
-	// 		await playbackInstance.unloadAsync()
-	// 		currentIndex < audioBookPlaylist.length - 1 ? (currentIndex -= 1) : (currentIndex = 0)
-	// 		this.setState({
-	// 			currentIndex
-	// 		})
-	// 		this.loadAudio()
-	// 	}
-	// }
+	handlePreviousTrack = async () => {
+		let { playbackInstance, currentIndex } = this.state
+		if (playbackInstance) {
+			await playbackInstance.unloadAsync()
+			currentIndex < audioBookPlaylist.length - 1 ? (currentIndex -= 1) : (currentIndex = 0)
+			this.setState({
+				currentIndex
+			})
+			this.loadAudio()
+		}
+	}
 
-	// handleNextTrack = async () => {
-	// 	let { playbackInstance, currentIndex } = this.state
-	// 	if (playbackInstance) {
-	// 		await playbackInstance.unloadAsync()
-	// 		currentIndex < audioBookPlaylist.length - 1 ? (currentIndex += 1) : (currentIndex = 0)
-	// 		this.setState({
-	// 			currentIndex
-	// 		})
-	// 		this.loadAudio()
-	// 	}
-	// }
+	handleNextTrack = async () => {
+		let { playbackInstance, currentIndex } = this.state
+		if (playbackInstance) {
+			await playbackInstance.unloadAsync()
+			currentIndex < audioBookPlaylist.length - 1 ? (currentIndex += 1) : (currentIndex = 0)
+			this.setState({
+				currentIndex
+			})
+			this.loadAudio()
+		}
+	}
 
 	renderFileInfo() {
 		const { playbackInstance, currentIndex } = this.state
@@ -158,8 +161,9 @@ export default class Radio extends Component {
 			<View style={styles.container}>
 				<Image
 					style={styles.albumCover}
-					source={{ uri: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg' }}
+					source={require('../img/iconapp.png')}
 				/>
+			 
 				<View style={styles.controls}>
 					{/* <TouchableOpacity style={styles.control} onPress={this.handlePreviousTrack}>
 						<Ionicons name='ios-skip-backward' size={48} color='#444' />

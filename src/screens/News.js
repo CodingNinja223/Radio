@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {View,StyleSheet,FlatList,TouchableOpacity} from 'react-native';
 import {ListItem,Avatar} from 'react-native-elements';
 import { Header } from 'react-native-elements';
+
 class News extends Component{
     constructor(){
         super();
@@ -12,7 +13,7 @@ class News extends Component{
 
 
 
-   componentDidMount(){
+    componentDidMount(){
     fetch('https://www.wiggletunes.co.za/wp-json/wp/v2/posts?_embed')
     .then(res=>res.json())
     .then(data=>{
@@ -20,6 +21,7 @@ class News extends Component{
             posts:[...data]
         })
     })
+  
    }
 
     render(){
@@ -53,6 +55,7 @@ class News extends Component{
              </TouchableOpacity>  
              )}
           />
+     
       </View>
         )
     }
