@@ -36,7 +36,8 @@ class News extends Component{
                 this.props.navigation.navigate('Detail',{
                     itemId:item.id,
                     image:item.featured_image_urls.medium,
-                    content:item.content.rendered.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
+                    content:item.content.rendered.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ''),
+                    headerTitle:item.title.rendered
                 })
             }}>   
                <ListItem key={item.id}  bottomDivider>

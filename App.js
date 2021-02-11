@@ -19,7 +19,13 @@ import { Ionicons, Entypo  } from '@expo/vector-icons';
 import OneSignal from 'react-native-onesignal'
 import RadioTabs from './src/screens/RadioTab';
 import Cart from './src/screens/Cart';
-
+import ProductDetail from './src/screens/ProductDetail';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import cartReducer from './src/screens/card.reducer';
+import AlternativeShop from './src/screens/alternativeshop';
+import ShopComponent from './src/screens/Shop.container';
+import ShopDetail from './src/screens/ProductDetail.container';
 
 
 const Stack=createStackNavigator();
@@ -36,8 +42,8 @@ return(
             )
         }}
        />
-        <Stack.Screen name="Watch" component={Watch}  options={{ title: 'Watch' }}/>
-        <Stack.Screen name="Podcast" component={Podcast} options={{ title: 'Watch' }}/>
+        <Stack.Screen name="Watch" component={Watch}  />
+        <Stack.Screen name="Podcast" component={Podcast} />
    </Stack.Navigator>
  )
 }
@@ -53,7 +59,7 @@ const NewsNavigator=({navigation})=>{
                     )
                 }}
             />
-            <Stack.Screen name="Detail" component={NewsDeatil} />
+            <Stack.Screen name="Detail" component={NewsDeatil} options={({ route }) => ({ title: route.params.headerTitle })} />
         </Stack.Navigator>
     )
 }
@@ -134,9 +140,11 @@ const ShopNavigator=({navigation})=>{
                 )
             }}
            />
+           <Stack.Screen name="ProductDetail" component={ProductDetail} options={({ route }) => ({ title: route.params.productTitle })}/>
        </Stack.Navigator>
     )
 }
+
 
 const ShopTabNavigation=()=>{
     return(
@@ -215,50 +223,51 @@ class App extends Component {
         this.setState({ isReady: true });
 
          /* O N E S I G N A L   S E T U P */
-        //  OneSignal.setAppId("590075df-aaa1-4966-a1f8-25ba8bdcbc6b");
-        //  OneSignal.setLogLevel(6, 0);
-        //  OneSignal.setRequiresUserPrivacyConsent(false);
-        //  OneSignal.promptForPushNotificationsWithUserResponse(response => {
-        //      this.OSLog("Prompt response:", response);
-        //  });
+         const appId="590075df-aaa1-4966-a1f8-25ba8bdcbc6b"
+         OneSignal.setAppId(appId);
+         OneSignal.setLogLevel(6, 0);
+         OneSignal.setRequiresUserPrivacyConsent(false);
+         OneSignal.promptForPushNotificationsWithUserResponse(response => {
+             this.OSLog("Prompt response:", response);
+         });
 
-        //  /* O N E S I G N A L  H A N D L E R S */
-        // OneSignal.setNotificationWillShowInForegroundHandler(notifReceivedEvent => {
-        //     this.OSLog("OneSignal: notification will show in foreground:", notifReceivedEvent);
-        //     let notif = notifReceivedEvent.getNotification();
+         /* O N E S I G N A L  H A N D L E R S */
+        OneSignal.setNotificationWillShowInForegroundHandler(notifReceivedEvent => {
+            this.OSLog("OneSignal: notification will show in foreground:", notifReceivedEvent);
+            let notif = notifReceivedEvent.getNotification();
 
-        //     const button1 = {
-        //         text: "Cancel",
-        //         onPress: () => { notifReceivedEvent.complete(); },
-        //         style: "cancel"
-        //     };
+            const button1 = {
+                text: "Cancel",
+                onPress: () => { notifReceivedEvent.complete(); },
+                style: "cancel"
+            };
 
-        //     const button2 = { text: "Complete", onPress: () => { notifReceivedEvent.complete(notif); }};
+            const button2 = { text: "Complete", onPress: () => { notifReceivedEvent.complete(notif); }};
 
-        //     Alert.alert("Complete notification?", "Test", [ button1, button2], { cancelable: true });
-        // });
-        // OneSignal.setNotificationOpenedHandler(notification => {
-        //     this.OSLog("OneSignal: notification opened:", notification);
-        // });
-        // OneSignal.setInAppMessageClickHandler(event => {
-        //     this.OSLog("OneSignal IAM clicked:", event);
-        // });
-        // OneSignal.addEmailSubscriptionObserver((event) => {
-        //     this.OSLog("OneSignal: email subscription changed: ", event);
-        // });
-        // OneSignal.addSubscriptionObserver(event => {
-        //     this.OSLog("OneSignal: subscription changed:", event);
-        //     this.setState({ isSubscribed: event.to.isSubscribed})
-        // });
-        // OneSignal.addPermissionObserver(event => {
-        //     this.OSLog("OneSignal: permission changed:", event);
-        // });
+            Alert.alert("Complete notification?", "Test", [ button1, button2], { cancelable: true });
+        });
+        OneSignal.setNotificationOpenedHandler(notification => {
+            this.OSLog("OneSignal: notification opened:", notification);
+        });
+        OneSignal.setInAppMessageClickHandler(event => {
+            this.OSLog("OneSignal IAM clicked:", event);
+        });
+        OneSignal.addEmailSubscriptionObserver((event) => {
+            this.OSLog("OneSignal: email subscription changed: ", event);
+        });
+        OneSignal.addSubscriptionObserver(event => {
+            this.OSLog("OneSignal: subscription changed:", event);
+            this.setState({ isSubscribed: event.to.isSubscribed})
+        });
+        OneSignal.addPermissionObserver(event => {
+            this.OSLog("OneSignal: permission changed:", event);
+        });
   
-        // const deviceState = await OneSignal.getDeviceState();
+        const deviceState = await OneSignal.getDeviceState();
 
-        // this.setState({
-        //     isSubscribed : deviceState.isSubscribed
-        // });
+        this.setState({
+            isSubscribed : deviceState.isSubscribed
+        });
       }
 
 	render(){
@@ -266,15 +275,16 @@ class App extends Component {
             return <AppLoading/>
         }
 	return(
+        <Provider store={createStore(cartReducer)}>
 		<NavigationContainer>
            <Drawer.Navigator initialRouteName="Now Playing">
                <Drawer.Screen name="Now Playing" component={TabNavigation}/>
                <Drawer.Screen name="Shop" component={ShopTabNavigation}/>
                <Drawer.Screen name="News" component={NewsNavigator}/>
-               <Drawer.Screen name="Song Request" component={RequestNavigation}/>
                <Drawer.Screen name="Review" component={ReviewNavigation}/>
            </Drawer.Navigator>
         </NavigationContainer>
+      </Provider>
 	)
 }
 }

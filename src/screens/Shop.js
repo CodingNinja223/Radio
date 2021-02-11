@@ -1,9 +1,16 @@
 import React,{Component} from 'react';
-import {View,StyleSheet,FlatList,Image} from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right,Title } from 'native-base';
+import {View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  TouchableNativeFeedback,
+  Platform} from 'react-native';
+// import { Container, Header, Content,  CardItem, Thumbnail, Button, Icon, Left, Body, Right,Title } from 'native-base';
 import { FontAwesome } from '@expo/vector-icons'; 
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+import Card from '../components/Card';
 
 
 class Shop extends Component{
@@ -33,41 +40,34 @@ constructor(){
              keyExtractor={item=>item.id.toString()}
              data={products}
              renderItem={({item})=>(
-                <Content key={item.id}>
-                <Card style={{flex: 2}}>
-                  <CardItem>
-                    <Left>
-                       <Thumbnail source={{uri: item.featured_image_urls.medium}} /> 
-                      <Body>
-                        <Text>{item.name}</Text>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                  <CardItem>
-                    <Body style={styles.card}>
-                       <Image source={{uri:item.featured_image_urls.medium}} style={{height: 200, width: 250, flex: 1}}/> 
-                    </Body>
-                  </CardItem>
-                  <CardItem>
-                    <Left>
-                      <Button transparent textStyle={{color: '#87838B'}}>
-                        <Text>R{item.price}</Text>
-                      </Button>
-                    </Left>
-                    <Right transparent >
-                       <TouchableOpacity onPress={()=>{
-                            this.props.navigation.navigate('Cart',{
-                                image:item.featured_image_urls.medium,
-                                price:item.price,
-                                id:item.id
-                            })
-                        }}>
-                         <FontAwesome name="cart-plus" size={24} color='blue' />
-                      </TouchableOpacity>
-                    </Right>
-                  </CardItem>
-                </Card>
-              </Content>
+               <View style={styles.wrap}>
+              <Card style={styles.product}>
+               <View style={styles.touchable}>
+                <TouchableOpacity  >
+                  <View>
+                    <View style={styles.imageContainer}>
+                      <Image style={styles.image} source={{ uri: item.featured_image_urls.medium }} />
+                    </View>
+                    <View style={styles.details}>
+                      <Text style={styles.title}>{item.name}</Text>
+                      <Text style={styles.price}>R{item.price}</Text>
+                    </View>
+                    <View style={styles.actions}>
+                       <Text onPress={()=>{
+                         this.props.navigation.navigate('ProductDetail',{
+                           productId:item.id,
+                           productTitle:item.name,
+                           productImage:item.featured_image_urls.medium,
+                           productPrice:item.price,
+                         
+                         })
+                       }}>View Detail</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </Card>
+            </View>
              )}
             
             />
@@ -76,9 +76,50 @@ constructor(){
 }
 
 const styles=StyleSheet.create({
-    card:{
-        justifyContent:'center'
-    }
-    
+  wrap:{
+    flex:1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent:'center',
+  },
+  product: {
+    height: 300,
+    margin: 20
+  },
+  touchable: {
+    borderRadius: 10,
+    overflow: 'hidden'
+  },
+  imageContainer: {
+    width: '100%',
+    height: '60%',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    overflow: 'hidden'
+  },
+  image: {
+    width: '50%',
+    height: '100%'
+  },
+  details: {
+    alignItems: 'center',
+    height: '17%',
+    padding: 10
+  },
+  title: {
+    fontSize: 18,
+    marginVertical: 2
+  },
+  price: {
+    fontSize: 14,
+    color: '#888'
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '23%',
+    paddingHorizontal: 20
+  }
 })
 export default Shop;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet,View,Text} from 'react-native';
 import {WebView} from 'react-native-webview';
+
 import { 
     AdMobBanner, 
     AdMobInterstitial, 
@@ -8,35 +9,34 @@ import {
     AdMobRewarded
   } from 'expo-ads-admob'
 
-class Histrory extends React.Component{
+const Histrory =()=>{
 
 
-async componentDidMount(){
-    
+    const myScript = `
+    (function () {
+        const li=document.getElementsByTagName("li").style.listStyle="none";
+    })();
+    `;
+    return(
+      <WebView
+      source={{
+      uri: 'https://www.wiggletunes.co.za/song-history.html'
+      }}
+      injectedJavaScript={myScript}
+   />
+    )
+
 }
 
-   render(){
-    return(
-     <View style={styles.container}>
+
+
+export default Histrory;
+
+
+{/* <View style={styles.container}>
         <AdMobBanner
-          style={styles.banner}
+          style={{width:'100%'}}
           bannerSize="fullBanner"
           adUnitID="ca-app-pub-3940256099942544/6300978111"
           didFailToReceiveAdWithError={this.bannerError} />
-     </View>
-    )
-}
-}
-
-const styles=StyleSheet.create({
-     container:{
-        flex:1,
-       justifyContent:'flex-end',
-       alignItems:'flex-start'
-    } ,
-    banner:{
-        width:150
-    }
-})
-
-export default Histrory;
+     </View> */}

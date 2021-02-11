@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Audio } from 'expo-av';
-import {Helmet} from "react-helmet";
+import {WebView} from 'react-native-webview';
+import Slider from '@react-native-community/slider';
 
 
 const audioBookPlaylist = [
@@ -102,14 +103,13 @@ export default class Radio extends Component {
 	
 	onPlaybackStatusUpdate = status => {
 		this.setState({
-			isBuffering: status.isBuffering
+			isBuffering: status.isBuffering,
 		})
 	}
 
 	handlePlayPause = async () => {
 		const { isPlaying, playbackInstance } = this.state
 		isPlaying ? await playbackInstance.pauseAsync() : await playbackInstance.playAsync()
-
 		this.setState({
 			isPlaying: !isPlaying
 		})
@@ -157,11 +157,28 @@ export default class Radio extends Component {
 	}
 
 	render() {
+		const myScript = `
+    (function () {
+        const next=document.querySelector(".radioco_song").style.fontSize="35px";
+		const next1=document.querySelector(".radioco_song").style.paddingTop="20px";
+		const next2=document.querySelector(".radioco_song").style.lineHeight="1.5em";
+		const previous=document.querySelector(".radioco_next").style.fontSize="30px";
+		const previous1=document.querySelector(".radioco_next").style.paddingTop="20px";
+    })();
+    `;
 		return (
 			<View style={styles.container}>
-				<Image
+				{/* <Image
 					style={styles.albumCover}
 					source={require('../img/iconapp.png')}
+				/> */}
+				 <WebView
+					source={{
+					uri: 'https://www.wiggletunes.co.za/Current-Song.html'
+					}}
+					injectedJavaScript={myScript}
+                    javaScriptEnabled={true}
+			 		style={{width:500,height:500,resizeMode:'cover',flex:1,marginVertical:250}}
 				/>
 			 
 				<View style={styles.controls}>
@@ -170,16 +187,16 @@ export default class Radio extends Component {
 					</TouchableOpacity> */}
 					<TouchableOpacity style={styles.control} onPress={this.handlePlayPause}>
 						{this.state.isPlaying ? (
-							<Ionicons name='ios-pause' size={48} color='#444' />
+							<Ionicons name='ios-pause' size={100} color='#444' />
 						) : (
-							<Ionicons name='ios-play-circle' size={48} color='#444' />
+							<Ionicons name='ios-play-circle' size={100} color='#444' />
 						)}
 					</TouchableOpacity>
 					{/* <TouchableOpacity style={styles.control} onPress={this.handleNextTrack}>
 						<Ionicons name='ios-skip-forward' size={48} color='#444' />
 					</TouchableOpacity> */}
 				</View>
-				{this.renderFileInfo()}
+				{/* {this.renderFileInfo()} */}
 			</View>
 		)
 	}
@@ -216,6 +233,8 @@ const styles = StyleSheet.create({
 		margin: 20
 	},
 	controls: {
+		position:'absolute',
+		top:'66%',
 		flexDirection: 'row'
 	}
 })

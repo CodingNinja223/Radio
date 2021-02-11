@@ -13,8 +13,11 @@ class Reviews extends Component{
 
     render(){
       const myScript = `
-      document.querySelector(.masthead).style.display="none";
-      true; // note: this is required, or you'll sometimes get silent failures
+    (function () {
+        const footer=document.querySelector("#footer").style.display="none";
+        const header=document.querySelector(".mobile-header-bar").style.display="none";
+        const top=document.querySelector(".upb_row_bg").style.display="none";
+    })();
     `;
         return(
           <WebView
