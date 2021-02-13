@@ -1,11 +1,10 @@
 import React,{Component} from 'react'
-import { StyleSheet, TouchableOpacity, View, Image} from 'react-native'
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator,DrawerContentScrollView,
+    DrawerItemList, } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Radio from './src/screens/Radio';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import Watch from './src/screens/Watch';
@@ -15,17 +14,15 @@ import Shop from './src/screens/Shop';
 import News from './src/screens/News';
 import NewsDeatil from './src/screens/NewsDetails';
 import SongRequest from './src/screens/Songrequest';
-import { Ionicons, Entypo  } from '@expo/vector-icons'; 
+import { Ionicons, Entypo, AntDesign , MaterialIcons  } from '@expo/vector-icons'; 
 import OneSignal from 'react-native-onesignal'
 import RadioTabs from './src/screens/RadioTab';
-import Cart from './src/screens/Cart';
 import ProductDetail from './src/screens/ProductDetail';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import cartReducer from './src/screens/card.reducer';
-import AlternativeShop from './src/screens/alternativeshop';
-import ShopComponent from './src/screens/Shop.container';
-import ShopDetail from './src/screens/ProductDetail.container';
+import Feedback from './src/screens/Feedback';
+import {View,Image,SafeAreaView} from 'react-native';
+import CustomDrawer from './src/screens/CustomDrawer';
+// import {Drawer} from 'native-base';
+
 
 
 const Stack=createStackNavigator();
@@ -38,8 +35,12 @@ return(
         options={{
             
             headerLeft:()=>(
-                <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
-            )
+                <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+            ),
+            headerStyle: {
+                backgroundColor: 'black',
+              },
+            headerTintColor: '#fff',
         }}
        />
         <Stack.Screen name="Watch" component={Watch}  />
@@ -55,11 +56,23 @@ const NewsNavigator=({navigation})=>{
                  options={{
             
                     headerLeft:()=>(
-                        <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
-                    )
+                        <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                    ),
+                    headerStyle: {
+                        backgroundColor: 'black',
+                      },
+                    headerTintColor: '#fff',
                 }}
             />
-            <Stack.Screen name="Detail" component={NewsDeatil} options={({ route }) => ({ title: route.params.headerTitle })} />
+            <Stack.Screen name="Detail" component={NewsDeatil} options={({ route }) => ({ 
+                title: route.params.headerTitle,
+                headerLeft:()=>(
+                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                ),
+                headerStyle: {
+                    backgroundColor: 'black',
+                  },
+                headerTintColor: '#fff', })} />
         </Stack.Navigator>
     )
 }
@@ -70,10 +83,13 @@ const WatchNavigator=({navigation})=>{
         <Stack.Navigator>
             <Stack.Screen name="Watch" component={Watch}
                options={{
-            
                 headerLeft:()=>(
-                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
-                )
+                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                ),
+                headerStyle: {
+                    backgroundColor: 'black',
+                  },
+                headerTintColor: '#fff',
             }}
             />
         </Stack.Navigator>
@@ -85,10 +101,13 @@ const PodcastNavigator=({navigation})=>{
         <Stack.Navigator>
             <Stack.Screen name="Podcast" component={Podcast}
               options={{
-            
                 headerLeft:()=>(
-                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
-                )
+                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                ),
+                headerStyle: {
+                    backgroundColor: 'black',
+                  },
+                headerTintColor: '#fff',
             }}
             />
         </Stack.Navigator>
@@ -100,6 +119,14 @@ const TabNavigation=()=>{
     return(
         <Tab.Navigator 
         initialRouteName="Now Playing"
+        tabBarOptions={{
+            activeTintColor: 'white',
+            inactiveTintColor: 'gray',
+            style:{
+                backgroundColor:'black',
+                color:'white'
+            }
+        }}
          screenOptions={({route})=>({
              tabBarIcon:({focused,color,size})=>{
                  let iconName;
@@ -112,19 +139,19 @@ const TabNavigation=()=>{
                     iconName=focused
                     ? 'tv'
                     : 'tv-outline'
-                 }else if(route.name === 'Podcast'){
+                 }else if(route.name === 'Podcasts'){
                     iconName=focused
                     ? 'radio-sharp'
                     : 'radio-outline'
                  }
 
-                 return <Ionicons name={iconName} size={24} color="black" /> 
+                 return <Ionicons name={iconName} size={25} color="white" /> 
              }
          })}
         >
              <Tab.Screen name="Now Playing" component={PrimaryNavigation}/>
              <Tab.Screen name="Watch" component={WatchNavigator}/>
-             <Tab.Screen name="Podcast" component={PodcastNavigator}/>
+             <Tab.Screen name="Podcasts" component={PodcastNavigator}/>
         </Tab.Navigator>
     )
 }
@@ -134,13 +161,24 @@ const ShopNavigator=({navigation})=>{
        <Stack.Navigator>
            <Stack.Screen name="Shop" component={Shop}  
               options={{
-            
                 headerLeft:()=>(
-                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
-                )
+                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                ),
+                headerStyle: {
+                    backgroundColor: 'black',
+                  },
+                headerTintColor: '#fff',
             }}
            />
-           <Stack.Screen name="ProductDetail" component={ProductDetail} options={({ route }) => ({ title: route.params.productTitle })}/>
+           <Stack.Screen name="ProductDetail" component={ProductDetail} options={({ route }) => ({ 
+               title: route.params.productTitle,
+               headerLeft:()=>(
+                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                ),
+                headerStyle: {
+                    backgroundColor: 'black',
+                  },
+                headerTintColor: '#fff', })}/>
        </Stack.Navigator>
     )
 }
@@ -164,12 +202,11 @@ const ShopTabNavigation=()=>{
                     : 'shopping-cart'
                  }
 
-                 return <Entypo name={iconName} size={24} color="black" /> 
+                 return <Entypo name={iconName} size={30} color="black" /> 
              }
          })}
         >
              <Tab.Screen name="Shop" component={ShopNavigator}/>
-             <Tab.Screen name="Cart" component={Cart}/>
         </Tab.Navigator>
     )
 }
@@ -180,7 +217,7 @@ const RequestNavigation=({navigation})=>{
             options={{
             
                 headerLeft:()=>(
-                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
+                    <Ionicons name="menu" size={30} color="black" onPress={()=>navigation.openDrawer()}/>
                 )
             }}
           />
@@ -188,16 +225,37 @@ const RequestNavigation=({navigation})=>{
     )
 }
 
+const FeedbackNavigation=({navigation
+})=>{
+    return(
+        <Stack.Navigator>
+             <Stack.Screen name="Feedback" component={Feedback}  
+            options={{
+                headerLeft:()=>(
+                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                ),
+                headerStyle: {
+                    backgroundColor: 'black',
+                  },
+                headerTintColor: '#fff',
+            }}
+          />
+        </Stack.Navigator>
+    )
+}
 
 const ReviewNavigation=({navigation})=>{
     return(
       <Stack.Navigator>
           <Stack.Screen name="Review" component={Review}  
             options={{
-            
                 headerLeft:()=>(
-                    <Ionicons name="menu" size={24} color="black" onPress={()=>navigation.openDrawer()}/>
-                )
+                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
+                ),
+                headerStyle: {
+                    backgroundColor: 'black',
+                  },
+                headerTintColor: '#fff',
             }}
           />
       </Stack.Navigator>
@@ -275,16 +333,49 @@ class App extends Component {
             return <AppLoading/>
         }
 	return(
-        <Provider store={createStore(cartReducer)}>
 		<NavigationContainer>
-           <Drawer.Navigator initialRouteName="Now Playing">
-               <Drawer.Screen name="Now Playing" component={TabNavigation}/>
-               <Drawer.Screen name="Shop" component={ShopTabNavigation}/>
-               <Drawer.Screen name="News" component={NewsNavigator}/>
-               <Drawer.Screen name="Review" component={ReviewNavigation}/>
+           <Drawer.Navigator initialRouteName="Now Playing"
+                drawerStyle={{
+                     backgroundColor: 'black'
+                }}
+                 drawerContentOptions={{
+                   activeTintColor:'white',
+                   inactiveTintColor:'white'
+                 }}
+                  drawerContent={props=><CustomDrawer{...props}/>}
+              >
+               <Drawer.Screen name="Now Playing" component={TabNavigation} options={{
+                   drawerIcon:()=>(
+                    <Ionicons name="musical-notes" size={24} color="white" />
+                   )
+
+               }}/>
+               <Drawer.Screen name="News" component={NewsNavigator}  options={{
+                   drawerIcon:()=>(
+                    <Ionicons name="newspaper-outline" size={24} color="white" />
+                   )
+
+               }}/>
+               <Drawer.Screen name="Shop" component={ShopNavigator} options={{
+                   drawerIcon:()=>(
+                    <AntDesign name="shoppingcart" size={24} color="white" />
+                   )
+
+               }}/>
+               <Drawer.Screen name="Feedback" component={FeedbackNavigation} options={{
+                   drawerIcon:()=>(
+                    <MaterialIcons name="feedback" size={24} color="white" />
+                   )
+
+               }} />
+               <Drawer.Screen name="Rate this App" component={ReviewNavigation} options={{
+                   drawerIcon:()=>(
+                    <MaterialIcons name="star-rate" size={24} color="white" />
+                   )
+
+               }}/>
            </Drawer.Navigator>
         </NavigationContainer>
-      </Provider>
 	)
 }
 }

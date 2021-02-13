@@ -7,10 +7,15 @@ import {View,
   FlatList,
   TouchableNativeFeedback,
   Platform} from 'react-native';
-// import { Container, Header, Content,  CardItem, Thumbnail, Button, Icon, Left, Body, Right,Title } from 'native-base';
-import { FontAwesome } from '@expo/vector-icons'; 
-// import { TouchableOpacity } from 'react-native-gesture-handler';
+  import {
+    AdMobBanner,
+    AdMobInterstitial,
+    PublisherBanner,
+    AdMobRewarded,
+    setTestDeviceIDAsync,
+  } from 'expo-ads-admob';
 import Card from '../components/Card';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 class Shop extends Component{
@@ -36,6 +41,7 @@ constructor(){
         const {products}=this.state;
   
         return(
+          <ScrollView style={{backgroundColor:'#161616'}}>
             <FlatList
              keyExtractor={item=>item.id.toString()}
              data={products}
@@ -71,6 +77,13 @@ constructor(){
              )}
             
             />
+              <AdMobBanner
+              style={{width:'100%'}}
+              bannerSize="fullBanner"
+              adUnitID="ca-app-pub-4848737122422413/6221324032" // Test ID, Replace with your-admob-unit-id
+              servePersonalizedAds // true or false
+              onDidFailToReceiveAdWithError={this.bannerError} />
+      </ScrollView>
         )
     }
 }
@@ -78,8 +91,9 @@ constructor(){
 const styles=StyleSheet.create({
   wrap:{
     flex:1,
-    flexDirection: 'row',
     flexWrap: 'wrap',
+    flexDirection: 'row',
+    padding:5,
     justifyContent:'center',
   },
   product: {

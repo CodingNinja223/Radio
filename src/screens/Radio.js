@@ -1,9 +1,15 @@
 import React,{Component} from 'react';
-import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Image, Text,ImageBackground,Dimensions } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Audio } from 'expo-av';
 import {WebView} from 'react-native-webview';
-import Slider from '@react-native-community/slider';
+import {
+	AdMobBanner,
+	AdMobInterstitial,
+	PublisherBanner,
+	AdMobRewarded,
+	setTestDeviceIDAsync,
+  } from 'expo-ads-admob';
 
 
 const audioBookPlaylist = [
@@ -159,45 +165,50 @@ export default class Radio extends Component {
 	render() {
 		const myScript = `
     (function () {
+		const body=document.body.style.backgroundColor="#161616";
         const next=document.querySelector(".radioco_song").style.fontSize="35px";
 		const next1=document.querySelector(".radioco_song").style.paddingTop="20px";
 		const next2=document.querySelector(".radioco_song").style.lineHeight="1.5em";
+		const next3=document.querySelector(".radioco_song").style.color="white";
 		const previous=document.querySelector(".radioco_next").style.fontSize="30px";
 		const previous1=document.querySelector(".radioco_next").style.paddingTop="20px";
+		const previous2=document.querySelector(".radioco_next").style.color="white";
     })();
     `;
 		return (
 			<View style={styles.container}>
-				{/* <Image
-					style={styles.albumCover}
-					source={require('../img/iconapp.png')}
-				/> */}
+		       <View style={{height:'150%',padding:30}}>
 				 <WebView
 					source={{
 					uri: 'https://www.wiggletunes.co.za/Current-Song.html'
 					}}
 					injectedJavaScript={myScript}
                     javaScriptEnabled={true}
-			 		style={{width:500,height:500,resizeMode:'cover',flex:1,marginVertical:250}}
+			 		style={{width: Dimensions.get('window').width,height:800,resizeMode:'cover',marginVertical:250}}
 				/>
-			 
+			  </View>
 				<View style={styles.controls}>
 					{/* <TouchableOpacity style={styles.control} onPress={this.handlePreviousTrack}>
 						<Ionicons name='ios-skip-backward' size={48} color='#444' />
 					</TouchableOpacity> */}
 					<TouchableOpacity style={styles.control} onPress={this.handlePlayPause}>
 						{this.state.isPlaying ? (
-							<Ionicons name='ios-pause' size={100} color='#444' />
+							<Ionicons name='ios-pause' size={150} color='white' />
 						) : (
-							<Ionicons name='ios-play-circle' size={100} color='#444' />
+							<Ionicons name='ios-play-circle' size={150} color='white' />
 						)}
 					</TouchableOpacity>
 					{/* <TouchableOpacity style={styles.control} onPress={this.handleNextTrack}>
 						<Ionicons name='ios-skip-forward' size={48} color='#444' />
 					</TouchableOpacity> */}
 				</View>
-				{/* {this.renderFileInfo()} */}
-			</View>
+				<AdMobBanner
+				style={styles.admob}
+				bannerSize="fullBanner"
+				adUnitID="ca-app-pub-4848737122422413/6221324032" // Test ID, Replace with your-admob-unit-id
+				servePersonalizedAds // true or false
+				onDidFailToReceiveAdWithError={this.bannerError} />
+			</View >
 		)
 	}
 }
@@ -205,7 +216,7 @@ export default class Radio extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#161616',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
@@ -234,7 +245,11 @@ const styles = StyleSheet.create({
 	},
 	controls: {
 		position:'absolute',
-		top:'66%',
+		top:'65%',
 		flexDirection: 'row'
+	},
+	admob:{
+		position:'absolute',
+		top:'90%',
 	}
 })

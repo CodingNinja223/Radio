@@ -14,7 +14,8 @@ const Histrory =()=>{
 
     const myScript = `
     (function () {
-        const li=document.getElementsByTagName("li").style.listStyle="none";
+      const head=document.body.style.backgroundColor="#161616";
+        const li=document.getElementsByTagName("li").style.color="white";
     })();
     `;
     return(

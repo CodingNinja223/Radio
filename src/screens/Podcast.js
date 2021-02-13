@@ -1,12 +1,16 @@
 import React,{Component} from 'react';
-import {View,StyleSheet,FlatList,TouchableOpacity,Linking} from 'react-native';
+import {View,StyleSheet,FlatList,TouchableOpacity,Linking,ScrollView} from 'react-native';
 import {Image} from 'react-native';
 import { Audio } from 'expo-av';
-import { Util } from 'expo';
 import { Ionicons } from '@expo/vector-icons'
 import moment from 'moment';
-import {WebView} from 'react-native-webview';
-// import { Container, Header, Left, Body, Right} from 'native-base';
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+  setTestDeviceIDAsync,
+} from 'expo-ads-admob';
 
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title  } from 'native-base';
 
@@ -110,6 +114,7 @@ class Podcast extends Component{
       const {podcast,isPlaying}=this.state;
       console.log(this.state.sounds)
         return(
+          <ScrollView style={{backgroundColor:'#161616'}}>
              <FlatList
               keyExtractor={item=> item.id.toString()}
               data={podcast}
@@ -150,6 +155,13 @@ class Podcast extends Component{
                 </Content>
               )}
               />
+              <AdMobBanner
+                  style={{width:'100%'}}
+                  bannerSize="fullBanner"
+                  adUnitID="ca-app-pub-4848737122422413/6221324032" // Test ID, Replace with your-admob-unit-id
+                  servePersonalizedAds // true or false
+                  onDidFailToReceiveAdWithError={this.bannerError} />
+        </ScrollView>
         )
     }
 }

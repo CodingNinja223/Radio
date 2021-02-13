@@ -22,9 +22,9 @@ class Reviews extends Component{
         return(
           <WebView
             source={{
-            uri: 'https://www.wiggletunes.co.za/contact/'
+            uri: 'https://play.google.com/store/apps/details?id=com.wiggletunes.app'
             }}
-            injectedJavaScript={myScript}
+  
          />
         )
     }
