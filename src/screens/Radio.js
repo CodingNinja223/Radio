@@ -12,54 +12,12 @@ import {
   } from 'expo-ads-admob';
 
 
-const audioBookPlaylist = [
-	{
-		title: 'Hamlet - Act I',
-		author: 'William Shakespeare',
-		source: 'Librivox',
-		uri:
-			'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act1_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
-	},
-	{
-		title: 'Hamlet - Act II',
-		author: 'William Shakespeare',
-		source: 'Librivox',
-		uri:
-			'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act2_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
-	},
-	{
-		title: 'Hamlet - Act III',
-		author: 'William Shakespeare',
-		source: 'Librivox',
-		uri: 'http://www.archive.org/download/hamlet_0911_librivox/hamlet_act3_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
-	},
-	{
-		title: 'Hamlet - Act IV',
-		author: 'William Shakespeare',
-		source: 'Librivox',
-		uri:
-			'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act4_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
-	},
-	{
-		title: 'Hamlet - Act V',
-		author: 'William Shakespeare',
-		source: 'Librivox',
-		uri:
-			'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act5_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
-	}
-]
-
 export default class Radio extends Component {
 	state = {
 		isPlaying: false,
 		playbackInstance: null,
 		currentIndex: 0,
-		volume: 1.0,
+		volume: 1,
 		isBuffering: true
 	}
 
@@ -72,7 +30,8 @@ export default class Radio extends Component {
 				interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
 				shouldDuckAndroid: true,
 				staysActiveInBackground: true,
-				playThroughEarpieceAndroid: true
+				playThroughEarpieceAndroid: false,
+				useNativeControls:false
 			})
 
 			this.loadAudio()
@@ -82,7 +41,7 @@ export default class Radio extends Component {
 	}
 
 	async loadAudio() {
-		const { currentIndex, isPlaying, volume } = this.state
+		const { currentIndex, isPlaying, volume,rate } = this.state
 
 		try {
 			const playbackInstance = new Audio.Sound()
@@ -184,7 +143,7 @@ export default class Radio extends Component {
 					}}
 					injectedJavaScript={myScript}
                     javaScriptEnabled={true}
-			 		style={{width: Dimensions.get('window').width,height:800,resizeMode:'cover',marginVertical:250}}
+			 		style={{width: Dimensions.get('window').width,height:800,resizeMode:'cover',marginVertical:200}}
 				/>
 			  </View>
 				<View style={styles.controls}>
@@ -193,9 +152,9 @@ export default class Radio extends Component {
 					</TouchableOpacity> */}
 					<TouchableOpacity style={styles.control} onPress={this.handlePlayPause}>
 						{this.state.isPlaying ? (
-							<Ionicons name='ios-pause' size={150} color='white' />
+							<Ionicons name='ios-pause' size={125} color='white' />
 						) : (
-							<Ionicons name='ios-play-circle' size={150} color='white' />
+							<Ionicons name='ios-play-circle' size={125} color='white' />
 						)}
 					</TouchableOpacity>
 					{/* <TouchableOpacity style={styles.control} onPress={this.handleNextTrack}>

@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "radio",
-    "slug": "radio",
-    "version": "1.0.0",
+    "name": "Wiggle Tunes",
+    "slug": "wiggle-tunes",
+    "version": "1.0.9",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/img/icon-app.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/img/splash-screen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,22 +17,25 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier":"com.wiggletunes.app",
       "supportsTablet": true,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-4848737122422413~5141559547"
       }
     },
     "android": {
+      "package":"com.wiggletunes.app",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./src/img/Adaptive-icon.png",
+        "backgroundColor": "#000000"
       },
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-4848737122422413~5141559547" 
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./src/img/fav-icon.png"
     }
   }
 }

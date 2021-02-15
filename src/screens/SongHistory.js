@@ -12,14 +12,14 @@ import {
 const Histrory =()=>{
   const myScript = `
   (function () {
-      const head=document.getElementsByTagName("li").style.listStyle="none";
+      const head=document.getElementsByTagName("li").style.fontSize="50px";
   })();
   `;
 
     return(
       <WebView
       source={{
-      uri: 'http://wiggletunes.co.za/song-history-v1.html'
+      uri: 'https://www.wiggletunes.co.za/song-history-v4.html'
       }}
       injectedJavaScript={myScript}
    />

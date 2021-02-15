@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View,Text,StyleSheet,ScrollView,Image,TouchableOpacity} from 'react-native';
+import {View,Text,StyleSheet,ScrollView,Image,TouchableOpacity,Linking} from 'react-native';
 import {
   AdMobBanner,
   AdMobInterstitial,
@@ -13,7 +13,7 @@ import {
 class ProductDetail extends Component{
 
   render(){
-  const {productTitle,productImage,productPrice}=this.props.route.params;
+  const {productTitle,productImage,productPrice, productId}=this.props.route.params;
   return(
     <ScrollView style={{backgroundColor:'#161616'}}>
         <Image source={{uri:productImage}} style={styles.image}/>
@@ -22,7 +22,7 @@ class ProductDetail extends Component{
            <Text style={styles.price}>R{productPrice}</Text>
         </View>
         <View style={{marginVertical:15}}>
-             <TouchableOpacity style={styles.button}>
+             <TouchableOpacity style={styles.button} onPress={()=>Linking.openURL(`https://www.wiggletunes.co.za/?add-to-cart=${productId}`)}>
                   <Text style={{color:'black',textAlign:'center'}}>Buy Now</Text>
              </TouchableOpacity>
         </View>

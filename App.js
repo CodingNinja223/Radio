@@ -66,9 +66,6 @@ const NewsNavigator=({navigation})=>{
             />
             <Stack.Screen name="Detail" component={NewsDeatil} options={({ route }) => ({ 
                 title: route.params.headerTitle,
-                headerLeft:()=>(
-                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
-                ),
                 headerStyle: {
                     backgroundColor: 'black',
                   },
@@ -171,10 +168,7 @@ const ShopNavigator=({navigation})=>{
             }}
            />
            <Stack.Screen name="ProductDetail" component={ProductDetail} options={({ route }) => ({ 
-               title: route.params.productTitle,
-               headerLeft:()=>(
-                    <Ionicons name="menu" size={30} color="white" onPress={()=>navigation.openDrawer()}/>
-                ),
+                title: route.params.productTitle,
                 headerStyle: {
                     backgroundColor: 'black',
                   },
@@ -268,7 +262,7 @@ class App extends Component {
         super();
         this.state={
           isReady:false,
-          isSubscribed:false
+          isSubscribed:true
         }
     }
 
@@ -281,8 +275,8 @@ class App extends Component {
         this.setState({ isReady: true });
 
          /* O N E S I G N A L   S E T U P */
-         const appId="590075df-aaa1-4966-a1f8-25ba8bdcbc6b"
-         OneSignal.setAppId(appId);
+       
+         OneSignal.setAppId("590075df-aaa1-4966-a1f8-25ba8bdcbc6b");
          OneSignal.setLogLevel(6, 0);
          OneSignal.setRequiresUserPrivacyConsent(false);
          OneSignal.promptForPushNotificationsWithUserResponse(response => {
